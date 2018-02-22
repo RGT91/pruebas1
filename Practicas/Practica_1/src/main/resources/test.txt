@@ -3,7 +3,8 @@ NOMBRE1
 $id234_
 _fddsfid
 for
-{- 
+data
+{-
 Este es un comentario de haskell
 -}
 
