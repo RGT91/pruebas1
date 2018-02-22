@@ -1,6 +1,6 @@
 package testmaven;
 %%
-%class Aléxico
+%class AléxicoHaskell
 %public
 %standalone
 %unicode
@@ -30,11 +30,21 @@ WHEREID       = "where"
 WILDCARDID    = "_"
 FORID         = "for"
 PUNTO   = \.
-ENTERO  = [1-9][0-9]* | 0+
-ID_JAVA = [:jletter:] [:jletterdigit:]*
+ASCIIDIGIT    = [0-9]
+DIGIT         = {ASCIIDIGIT}
+OCTIT         = [0-7]
+HEXIT         = {DIGIT} | [A-Fa-f]
+DECIMAL       = {DIGIT}+
+OCTAL         = {OCTIT}+
+HEXADECIMAL   = {HEXIT}+
+ENTERO       = {DECIMAL} | "0o" {OCTAL} | "0O" {OCTAL} | "0x" {HEXADECIMAL} | "0X" {HEXADECIMAL}
+FLOTANTE         = {DECIMAL} "." {DECIMAL} {EXPONENTE}? | {DECIMAL} {EXPONENTE}?
+EXPONENTE      = ("e" | "E") ("+" | "-")? {DECIMAL}
+ID_HASKELL = [:jletter:] [:jletterdigit:]*
 %%
 {ENTERO}      { System.out.print("ENTERO("+yytext() + ")"); }
-{ID_Reserved}     { System.out.print("ID_Reserved("+yytext() + ")"); }
-{ID_JAVA}     { System.out.print("ID_JAVA("+yytext() + ")"); }
+{FLOTANTE}      { System.out.print("FLOTANTE("+yytext() + ")"); }
+{ID_RESERVED}     { System.out.print("ID_Reserved("+yytext() + ")"); }
+{ID_HASKELL}     { System.out.print("ID_HASKELL("+yytext() + ")"); }
 {COMMENT}     { System.out.print("COMMENT("+yytext() + ")"); }
 .             { }
