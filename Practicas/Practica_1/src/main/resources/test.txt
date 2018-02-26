@@ -1,13 +1,3 @@
 111111
-1212.4
-0.4e5
+1.2
 NOMBRE1
-$id234_
-_fddsfid
-for
-data
-{-
-Este es un comentario de haskell
--}
-
---Este es otro tipo de comentario
