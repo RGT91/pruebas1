@@ -6,7 +6,7 @@ public class AnalizadorLexico {
 
     public AnalizadorLexico(String archivo){
         try {
-            Reader lector = new FileReader("src/main/resources/test.txt");
+            Reader lector = new FileReader("src/main/resources/test_jflex.txt");
             lexer = new AléxicoHaskell(lector);
         }
         catch(FileNotFoundException ex) {

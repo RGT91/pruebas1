@@ -9,3 +9,4 @@ script:
   - cd Practica_2
   - mvn compile
   - mvn exec:java -Dexec.mainClass="testmaven.Test"
+  - mvn exec:java -Dexec.mainClass="ejer1.Test" < src/main/resources/test_ejer1.txt
