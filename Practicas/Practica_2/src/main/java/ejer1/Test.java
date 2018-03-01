@@ -11,6 +11,8 @@ abstract class State{
   abstract int index();
 
   abstract boolean isError();
+
+  abstract boolean isBottom();
 }
 
 class ErrorState extends State{
@@ -23,6 +25,28 @@ class ErrorState extends State{
   }
 
   public boolean isError(){
+    return true;
+  }
+
+  public boolean isBottom(){
+    return false;
+  }
+}
+
+class BottomState extends State{
+  public String label(){
+    return "QB";
+  }
+
+  public int index(){
+    return -2;
+  }
+
+  public boolean isError(){
+    return true;
+  }
+
+  public boolean isBottom(){
     return true;
   }
 }
@@ -45,6 +69,10 @@ class StateInt extends State{
   public boolean isError(){
     return false;
   }
+
+  public boolean isBottom(){
+    return false;
+  }
 }
 
 class KeyInt{
@@ -52,8 +80,8 @@ class KeyInt{
   public int i;
 
   public KeyInt(){
-    this.q = new ErrorState();
-    i = 1;
+    this.q = new BottomState();
+    i = 0;
   }
 
   public KeyInt(State q, int i){
@@ -73,8 +101,6 @@ class DeltaEje1 extends Delta{
   public State q3 = new StateInt(3);
   public State q4 = new StateInt(4);
   public State q5 = new StateInt(5);
-
-  public DeltaEje1(){}
 
   public State trans(State q, char a){
     if(!q.isError()){
@@ -111,10 +137,16 @@ class FailCheckException extends Exception{
   }
 }
 
+class EmptyAcceptedException extends Exception{
+  public EmptyAcceptedException(){
+    super("No se reconocio nada de la cadena");
+  }
+}
+
 interface AltOutput{
   String regExp(State q);
 
-  String getOutput(String wd) throws FailCheckException;
+  String getOutput(String wd) throws FailCheckException, EmptyAcceptedException;
 }
 
 class FiniteAutomaton extends FiniteDet implements AltOutput{
@@ -135,50 +167,46 @@ class FiniteAutomaton extends FiniteDet implements AltOutput{
   }
 
   public String regExp(State q){
-    if(q.index() == (new StateInt(2)).index()) return "ab";
-    if(q.index() == (new StateInt(5)).index()) return "(ab)*c";
+    if(q.index() == (new StateInt(2)).index()) return "(ab)";
+    if(q.index() == (new StateInt(5)).index()) return "((ab)*c)";
     return "";
   }
 
-  public String getOutput(String wd) throws FailCheckException{
-    List<State> acceptedPartial = new ArrayList<State>();
-    Stack<KeyInt> stored;
-    // por defecto ya son falsos
-    int wdLength = wd.length();
-    boolean[][] failedPrev = new boolean[6][wdLength+1];
-    String newWd = "";
+  public String getOutput(String wd) throws FailCheckException, EmptyAcceptedException{
+    Stack<KeyInt> stored = new Stack<KeyInt>();
     State q;
+    int wdSize = wd.length();
     boolean flag = true;
+    boolean flag2 = true;
+    KeyInt k;
+    boolean[][] failPrev = new boolean[6][wdSize+1];
     int i = 0;
+    String newWd = "";
     while(flag){
-      q= q0;
-      stored = new Stack<KeyInt>();
+      q = q0;
       stored.push(new KeyInt());
-
-      do{
-        if(failedPrev[q.index()][i]) break;
-        if(isFinal(q)) stored = new Stack<KeyInt>();
-        stored.push(new KeyInt(q,i));
-        q = nextState(q, wd.charAt(i));
-        i++;
-      } while (i<wdLength && !nextState(q, wd.charAt(i)).isError());
-      stored.push(new KeyInt(q,i));
-      for (KeyInt k = stored.pop(); !stored.empty(); k = stored.pop()) {
-        if(!isFinal(k.q)){
-          if(k.q.isError()){
-            throw new FailCheckException();
-          }
-          failedPrev[k.q.index()][k.i] = true;
+      flag2 = true;
+      while(i<wdSize && !nextState(q, wd.charAt(i)).isError() && flag2){
+        if(failPrev[q.index()][i]){
+          flag2 = false;
         }else{
-          if(k.i >= wdLength) flag = false;
-          i = k.i;
-          acceptedPartial.add(k.q);
-          break;
+          if(isFinal(q)){
+            stored = new Stack<KeyInt>();
+          }
+          stored.push(new KeyInt(q,i));
+          q = nextState(q, wd.charAt(i));
+          i++;
         }
       }
-    }
-    for (State fq : acceptedPartial) {
-      newWd += regExp(fq) + " ";
+      while(!isFinal(q)){
+        failPrev[q.index()][i] = true;
+        k = stored.pop();
+        q = k.q;
+        i = k.i;
+        if(q.isBottom()) throw new FailCheckException();
+      }
+      newWd += regExp(q);
+      if(i==wdSize) flag = false;
     }
     return newWd;
   }
@@ -199,7 +227,7 @@ public class Test {
         System.out.println("OK: "+patterns);
       }catch (FailCheckException e) {
         System.out.println("Error: "+e.getMessage());
-      }catch (Exception e) {
+      }catch (EmptyAcceptedException e) {
         System.out.println("Error: "+e.getMessage());
       }
     }
