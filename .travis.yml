@@ -6,13 +6,19 @@ install:
 
 jobs:
   include:
+    - stage: practica1
+      script:
+        - cd Practicas
+        - cd Practica_1
+        - mvn compile
+        - mvn exec:java -Dexec.mainClass="testmaven.HelloWorld"
     - stage: practica2
       script:
         - cd Practicas
         - cd Practica_2
         - mvn compile
-        - mvn exec:java -Dexec.mainClass="testmaven.Test"
         - mvn exec:java -Dexec.mainClass="ejer1.Test" < src/main/resources/test_ejer1.txt
+        - mvn exec:java -Dexec.mainClass="testmaven.Test" < src/main/resources/test_ejer1.txt
     - stage: proyecto1
       script:
         - cd Proyectos/Proyecto_1
