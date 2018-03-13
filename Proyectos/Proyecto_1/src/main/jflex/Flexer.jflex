@@ -42,7 +42,7 @@ IDENTIFICADOR   = [a-zA-Z_]([a-zA-Z0-9_])*
 
 %%
 <YYINITIAL> {
-  [ \t\f]         { }
+  [ \t\f]         { if(yyline==0){ tokens += "Error de indentación. Línea 1.\n"; return 0; } }
   {SALTO}     { tokens += "SALTO\n"; yybegin(INDENT); }
   {STRING}      { tokens += "STRING("+yytext() + ") "; }
   {OPERADOR}      { tokens += "OPERADOR("+yytext() + ") "; }
@@ -66,4 +66,4 @@ IDENTIFICADOR   = [a-zA-Z_]([a-zA-Z0-9_])*
   {RESERVADA}      { tokens += "RESERVADA("+yytext() + ") ";yybegin(YYINITIAL); }
   {IDENTIFICADOR}      { tokens += "IDENTIFICADOR("+yytext() + ") "; yybegin(YYINITIAL);}
 }
-.             { tokens += "Caracter ilegal <"+yytext()+">. En la linea "+ (yyline+1)+ "."; return 0; }
+.             { tokens += "Caracter ilegal <"+yytext()+">. En la linea "+ (yyline+1)+ ".\n"; return 0; }

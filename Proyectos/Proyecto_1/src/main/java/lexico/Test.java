@@ -12,5 +12,7 @@ public class Test {
         al.analiza();
         al = new AnalizadorLexico("resources/fz_error_lexema.py");
         al.analiza();
+        al = new AnalizadorLexico("resources/fz_error_inicio.py");
+        al.analiza();
     }
 }
