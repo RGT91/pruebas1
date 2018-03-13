@@ -22,4 +22,8 @@ public class AnalizadorLexico {
         }
     }
 
+    public void tokens(){
+        System.out.println(lexer.tokens);
+    }
+
 }
