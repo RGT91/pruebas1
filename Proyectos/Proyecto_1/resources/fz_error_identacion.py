@@ -9,4 +9,4 @@ elif n % 3 == 0:
 elif n % 5 == 0:
     print "Buzz"
 else:
-    print str(n)
+    print n

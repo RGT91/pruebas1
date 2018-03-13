@@ -8,4 +8,4 @@ elif n % 3 == 0:
 elif n % 5 == 0:
     현영 "Buzz"
 else:
-    print str(n)
+    print n
