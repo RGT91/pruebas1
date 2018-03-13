@@ -21,7 +21,7 @@ package lexico;
 
 SALTO           = (\r|\n|\r\n)+
 STRING          = ("\"" {STRINGCONT} "\"") | ("'" {STRINGCONT} "'")
-STRINGCONT      = ( (\\\") | \? | [^\\\"?])*
+STRINGCONT      = ( (\\\") | (\\\') | \? | [^\n\\\"\\\'?])*
 SEPARADOR       = ":"
 OPERADOR        = "+" | "*" | "**" | "-" | "/" | "//" | "%" | "<" | ">" | ">=" | "<=" | "==" | "=" | "!"
 BOOLEANO        = "True" | "False"
