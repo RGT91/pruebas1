@@ -3,17 +3,25 @@ package lexico;
 %class Flexer
 %public
 %standalone
+%line
 %unicode
 
 %{
-  int levels = 0;
-  int levels_aux = 0;
+  protected int levels;
+  protected int levels_aux;
+  public String tokens;
 %}
+
+%init{
+  levels = 0;
+  levels_aux = 0;
+  tokens = "";
+%init}
 
 
 SALTO           = (\r|\n|\r\n)+
 STRING          = ("\"" {STRINGCONT} "\"") | ("'" {STRINGCONT} "'")
-STRINGCONT      = ( (\\\") | \? | [^\\\"?])*
+STRINGCONT      = ( (\\\") | (\\\') | \? | [^\n\\\"\\\'?])*
 SEPARADOR       = ":"
 OPERADOR        = "+" | "*" | "**" | "-" | "/" | "//" | "%" | "<" | ">" | ">=" | "<=" | "==" | "=" | "!"
 BOOLEANO        = "True" | "False"
@@ -34,28 +42,28 @@ IDENTIFICADOR   = [a-zA-Z_]([a-zA-Z0-9_])*
 
 %%
 <YYINITIAL> {
-  {SALTO}     { levels_aux=0;System.out.print("SALTO\n"); yybegin(INDENT); }
-  {STRING}      { System.out.print("STRING("+yytext() + ") "); }
-  {OPERADOR}      { System.out.print("OPERADOR("+yytext() + ") "); }
-  {SEPARADOR}      { System.out.print("SEPARADOR("+yytext() + ") "); }
-  {BOOLEANO}      { System.out.print("BOOLEANO("+yytext() + ") "); }
-  {ENTERO}      { System.out.print("ENTERO("+yytext() + ") "); }
-  {FLOTANTE}      { System.out.print("FLOTANTE("+yytext() + ") "); }
-  {RESERVADA}      { System.out.print("RESERVADA("+yytext() + ") "); }
-  {IDENTIFICADOR}      { System.out.print("IDENTIFICADOR("+yytext() + ") "); }
+  [ \t\f]         { if(yyline==0){ tokens += "Error de indentación. Línea 1.\n"; return 0; } }
+  {SALTO}     { tokens += "SALTO\n"; yybegin(INDENT); }
+  {STRING}      { tokens += "STRING("+yytext() + ") "; }
+  {OPERADOR}      { tokens += "OPERADOR("+yytext() + ") "; }
+  {SEPARADOR}      { tokens += "SEPARADOR("+yytext() + ") "; }
+  {BOOLEANO}      { tokens += "BOOLEANO("+yytext() + ") "; }
+  {ENTERO}      { tokens += "ENTERO("+yytext() + ") "; }
+  {FLOTANTE}      { tokens += "FLOTANTE("+yytext() + ") "; }
+  {RESERVADA}      { tokens += "RESERVADA("+yytext() + ") "; }
+  {IDENTIFICADOR}      { tokens += "IDENTIFICADOR("+yytext() + ") "; }
 }
+
 <INDENT> {
   {SALTO}     { }
-  [ \t\f]         { System.out.print("INDENT "); }
-  {STRING}      { System.out.print("STRING("+yytext() + ") ");  yybegin(YYINITIAL); }
-  {OPERADOR}      { System.out.print("OPERADOR("+yytext() + ") "); yybegin(YYINITIAL);}
-  {SEPARADOR}      { System.out.print("SEPARADOR("+yytext() + ") "); yybegin(YYINITIAL);}
-  {BOOLEANO}      { System.out.print("BOOLEANO("+yytext() + ") ");yybegin(YYINITIAL); }
-  {ENTERO}      { System.out.print("ENTERO("+yytext() + ") ");yybegin(YYINITIAL); }
-  {FLOTANTE}      { System.out.print("FLOTANTE("+yytext() + ") ");yybegin(YYINITIAL); }
-  {RESERVADA}      { System.out.print("RESERVADA("+yytext() + ") ");yybegin(YYINITIAL); }
-  {IDENTIFICADOR}      { System.out.print("IDENTIFICADOR("+yytext() + ") "); yybegin(YYINITIAL);}
+  [ \t\f]         { tokens += "INDENT "; }
+  {STRING}      { tokens += "STRING("+yytext() + ") ";  yybegin(YYINITIAL); }
+  {OPERADOR}      { tokens += "OPERADOR("+yytext() + ") "; yybegin(YYINITIAL);}
+  {SEPARADOR}      { tokens += "SEPARADOR("+yytext() + ") "; yybegin(YYINITIAL);}
+  {BOOLEANO}      { tokens += "BOOLEANO("+yytext() + ") ";yybegin(YYINITIAL); }
+  {ENTERO}      { tokens += "ENTERO("+yytext() + ") ";yybegin(YYINITIAL); }
+  {FLOTANTE}      { tokens += "FLOTANTE("+yytext() + ") ";yybegin(YYINITIAL); }
+  {RESERVADA}      { tokens += "RESERVADA("+yytext() + ") ";yybegin(YYINITIAL); }
+  {IDENTIFICADOR}      { tokens += "IDENTIFICADOR("+yytext() + ") "; yybegin(YYINITIAL);}
 }
-.             { }
-/* tenemos que lanzar un error */
-/* .             { throw new Error("Error" + yytext()); } */
+.             { tokens += "Caracter ilegal <"+yytext()+">. En la linea "+ (yyline+1)+ ".\n"; return 0; }
