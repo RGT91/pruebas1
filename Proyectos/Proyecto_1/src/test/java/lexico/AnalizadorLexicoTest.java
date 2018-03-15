@@ -20,9 +20,15 @@ public class AnalizadorLexicoTest extends TestCase {
     al.analiza();
     File actualFile = new File("out/fizzbuzz.plx");
     File expectedFile = new File("out_test/fizzbuzz.plx");
-    // assertThat(actualFile).hasSameContentAs(expectedFile);
-    // descomentar lo de arriba cuando termine lo de identación
-    assertEquals(2, 1 + 1); // TODO
+    assertThat(actualFile).hasSameContentAs(expectedFile);
+  }
+
+  public final void testCompleteSuccess2() {
+    al = new AnalizadorLexico("resources/fizzbuzz0.py");
+    al.analiza();
+    File actualFile = new File("out/fizzbuzz0.plx");
+    File expectedFile = new File("out_test/fizzbuzz0.plx");
+    assertThat(actualFile).hasSameContentAs(expectedFile);
   }
 
   public final void testBooleanSuccess() {
