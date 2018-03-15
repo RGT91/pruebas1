@@ -24,3 +24,4 @@ jobs:
         - cd Proyectos/Proyecto_1
         - mvn compile
         - mvn exec:java -Dexec.mainClass="lexico.Test"
+        - mvn install
