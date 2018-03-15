@@ -42,9 +42,6 @@ jobs:
           command: mvn compile
       - run:
           working_directory: Proyectos/Proyecto_1
-          command: mvn exec:java -Dexec.mainClass="lexico.Test"
-      - run:
-          working_directory: Proyectos/Proyecto_1
           command: mvn install
 
 workflows:
