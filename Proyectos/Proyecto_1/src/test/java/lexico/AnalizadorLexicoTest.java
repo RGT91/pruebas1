@@ -40,4 +40,12 @@ public class AnalizadorLexicoTest extends TestCase {
     File expectedFile = new File("out_test/fz_error_inicio.plx");
     assertThat(actualFile).hasSameContentAs(expectedFile);
   }
+
+  public final void testInitIdentFail2() {
+    al = new AnalizadorLexico("resources/fz_error_inicio_1.py");
+    al.analiza();
+    File actualFile = new File("out/fz_error_inicio_1.plx");
+    File expectedFile = new File("out_test/fz_error_inicio.plx");
+    assertThat(actualFile).hasSameContentAs(expectedFile);
+  }
 }

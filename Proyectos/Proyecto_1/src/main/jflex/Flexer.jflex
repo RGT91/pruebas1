@@ -20,6 +20,7 @@ package lexico;
 
 
 SALTO           = (\r|\n|\r\n)+
+SALTOLOCO       = (\r|\n|\r\n)*[ \t\f]
 STRING          = ("\"" {STRINGCONT} "\"") | ("'" {STRINGCONT} "'")
 STRINGCONT      = ( (\\\") | (\\\') | \? | [^\n\\\"\\\'?])*
 SEPARADOR       = ":"
@@ -42,7 +43,8 @@ IDENTIFICADOR   = [a-zA-Z_]([a-zA-Z0-9_])*
 
 %%
 <YYINITIAL> {
-  [ \t\f]         { if(yyline==0){ tokens += "Error de indentación. Línea 1.\n"; return 0; } }
+  {SALTOLOCO}     { if(yyline==0){ tokens += "Error de indentación al inicio del archivo.\n"; return 0; } }
+  [ \t\f]         {  }
   {SALTO}     { tokens += "SALTO\n"; yybegin(INDENT); }
   {STRING}      { tokens += "STRING("+yytext() + ") "; }
   {OPERADOR}      { tokens += "OPERADOR("+yytext() + ") "; }
