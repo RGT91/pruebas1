@@ -1,1 +1,1 @@
-Error de indentación. Línea 1.
+Error de indentación al inicio del archivo.
