@@ -42,6 +42,9 @@ jobs:
           command: mvn compile
       - run:
           working_directory: Proyectos/Proyecto_1
+          command: mvn exec:java -Dexec.mainClass="lexico.Test" -Dexec.args="resources/fizzbuzz.py"
+      - run:
+          working_directory: Proyectos/Proyecto_1
           command: mvn install
 
 workflows:
