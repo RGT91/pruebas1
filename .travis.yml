@@ -4,9 +4,24 @@ install:
   - sudo tar -C /usr/share -xvzf jflex-1.6.1.tar.gz
   - sudo ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
 
-script:
-  - cd Practicas
-  - cd Practica_2
-  - mvn compile
-  - mvn exec:java -Dexec.mainClass="testmaven.Test"
-  - mvn exec:java -Dexec.mainClass="ejer1.Test" < src/main/resources/test_ejer1.txt
+jobs:
+  include:
+    - stage: practica1
+      script:
+        - cd Practicas
+        - cd Practica_1
+        - mvn compile
+        - mvn exec:java -Dexec.mainClass="testmaven.HelloWorld"
+    - stage: practica2
+      script:
+        - cd Practicas
+        - cd Practica_2
+        - mvn compile
+        - mvn exec:java -Dexec.mainClass="ejer1.Test" < src/main/resources/test_ejer1.txt
+        - mvn exec:java -Dexec.mainClass="testmaven.Test" < src/main/resources/test_ejer1.txt
+    - stage: proyecto1
+      script:
+        - cd Proyectos/Proyecto_1
+        - mvn compile
+        - mvn exec:java -Dexec.mainClass="lexico.Test" -Dexec.args="resources/fizzbuzz.py"
+        - mvn install

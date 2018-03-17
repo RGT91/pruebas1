@@ -1,0 +1,58 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+defaults: &defaults
+  working_directory: ~/project/legendary-barnacle
+  docker:
+    - image: sanjorgek/jflex:mvn
+
+version: 2
+jobs:
+  practica1:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          working_directory: Practicas/Practica_1
+          command: mvn compile
+      - run:
+          working_directory: Practicas/Practica_1
+          command: mvn exec:java -Dexec.mainClass="testmaven.HelloWorld"
+
+  practica2:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          working_directory: Practicas/Practica_2
+          command: mvn compile
+      - run:
+          working_directory: Practicas/Practica_2
+          command: mvn exec:java -Dexec.mainClass="ejer1.Test" < src/main/resources/test_ejer1.txt
+      - run:
+          working_directory: Practicas/Practica_2
+          command: mvn exec:java -Dexec.mainClass="testmaven.Test" < src/main/resources/test_ejer1.txt
+  proyecto1:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          working_directory: Proyectos/Proyecto_1
+          command: mvn compile
+      - run:
+          working_directory: Proyectos/Proyecto_1
+          command: mvn exec:java -Dexec.mainClass="lexico.Test" -Dexec.args="resources/fizzbuzz.py"
+      - run:
+          working_directory: Proyectos/Proyecto_1
+          command: mvn install
+
+workflows:
+  version: 2
+  btd:
+    jobs:
+      - practica1
+      - practica2:
+          requires:
+            - practica1
+      - proyecto1
