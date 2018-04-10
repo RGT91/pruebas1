@@ -36,6 +36,7 @@ import java.util.Stack;
           stack.push(spaceCount);
           return true;
         }else{
+          String deindentaString = "";
           while(!stack.isEmpty()){
             level = stack.pop();
             if(level < spaceCount){
@@ -46,9 +47,10 @@ import java.util.Stack;
               return false;
             }else if(level == spaceCount) {
               stack.push(level);
+              tokens += deindentaString;
               return true;
             }else if(level > spaceCount){
-              tokens +="DEINDENTA("+level+")\n";
+              deindentaString +="DEINDENTA("+level+")\n";
             }
           }
           tokens +="Error de indentación, linea "+ (yyline+1)+ ".\n";
