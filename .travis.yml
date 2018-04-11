@@ -32,3 +32,4 @@ jobs:
         - cd Practicas
         - cd Practica_3
         - mvn compile
+        - mvn exec:java -Dexec.mainClass="asintactico.Nodos" -Dexec.args="src/main/resources/test.txt"

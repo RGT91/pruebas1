@@ -53,6 +53,9 @@ jobs:
       - run:
           working_directory: Practicas/Practica_3
           command: mvn compile
+      - run:
+          working_directory: Practicas/Practica_3
+          command: mvn exec:java -Dexec.mainClass="asintactico.Nodos" -Dexec.args="src/main/resources/test.txt"
 
 workflows:
   version: 2
