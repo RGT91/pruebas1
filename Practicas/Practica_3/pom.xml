@@ -48,7 +48,7 @@
         <version>1.1.1</version>
         <executions>
           <execution>
-            <id>analizador-sintactico</id>
+            <id>analizador-sintactico-test</id>
             <phase>initialize</phase>
             <goals>
               <goal>exec</goal>
@@ -57,6 +57,19 @@
                 <workingDirectory>${project.basedir}/target/generated-sources/jflex/asintactico</workingDirectory>
                 <executable>byaccj</executable>
                 <commandlineArgs>-Jpackage=asintactico ${project.basedir}/src/main/byaccj/ari.y</commandlineArgs>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>analizador-sintactico-left</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+                <workingDirectory>${project.basedir}/target/generated-sources/jflex/asintactico</workingDirectory>
+                <executable>byaccj</executable>
+                <commandlineArgs>-Jclass=ParserLeft -Jpackage=asintactico ${project.basedir}/src/main/byaccj/ParserLeft.y</commandlineArgs>
             </configuration>
           </execution>
         </executions>
