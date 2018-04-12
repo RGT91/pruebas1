@@ -44,9 +44,9 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <workingDirectory>target/generated-sources/jflex/asintactico</workingDirectory>
-              <executable>byaccj</executable>
-              <commandlineArgs>-Jpackage=asintactico ../../../../src/main/byaccj/ari.y</commandlineArgs>
+                <workingDirectory>${project.basedir}/target/generated-sources/jflex/asintactico</workingDirectory>
+                <executable>byaccj</executable>
+                <commandlineArgs>-Jpackage=asintactico ${project.basedir}/src/main/byaccj/ari.y</commandlineArgs>
             </configuration>
           </execution>
         </executions>

@@ -52,13 +52,16 @@ jobs:
       - checkout
       - run:
           working_directory: Practicas/Practica_3
+          command: mvn initialize
+      - run:
+          working_directory: Practicas/Practica_3
           command: mvn compile
       - run:
           working_directory: Practicas/Practica_3
-          command: mvn exec:java -Dexec.mainClass="asintactico.Nodos" -Dexec.args="src/main/resources/test.txt"
+          command: mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test.txt"
       - run:
           working_directory: Practicas/Practica_3
-          command: mvn exec:java -Dexec.mainClass="asintactico.Nodos" -Dexec.args="src/main/resources/sum.txt"
+          command: mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/sum.txt"
 
 workflows:
   version: 2
