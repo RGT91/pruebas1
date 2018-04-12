@@ -58,10 +58,10 @@ jobs:
           command: mvn compile
       - run:
           working_directory: Practicas/Practica_3
-          command: mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test.txt"
+          command: mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test_fail_1.txt"
       - run:
           working_directory: Practicas/Practica_3
-          command: mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/sum.txt"
+          command: mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test_success_1.txt"
 
 workflows:
   version: 2

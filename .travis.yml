@@ -33,5 +33,5 @@ jobs:
         - cd Practica_3
         - mvn initialize
         - mvn compile
-        - mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test.txt"
-        - mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/sum.txt"
+        - mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test_fail_1.txt"
+        - mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test_success_1.txt"
