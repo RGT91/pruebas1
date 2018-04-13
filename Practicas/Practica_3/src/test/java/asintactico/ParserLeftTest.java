@@ -88,6 +88,15 @@ public class ParserLeftTest extends TestCase {
     }
   }
 
+  public final void testSuccess5() {
+    try{
+      parser = new ParserLeft(new FileReader("src/main/resources/test_success_5.txt"));
+      parser.yyparse();
+    }catch (Exception e) {
+      fail(e.toString());
+    }
+  }
+
   public final void testSuccessMix() {
     try{
       parser = new ParserLeft(new FileReader("src/main/resources/test_success_mix_1.txt"));

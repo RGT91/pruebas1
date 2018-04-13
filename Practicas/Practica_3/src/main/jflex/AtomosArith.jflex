@@ -13,10 +13,10 @@ package asintactico;
 %public
 %unicode
 %%
-[1-9]+             { parser.yylval = new ParserLeftVal(yytext()); return parser.NUMBER; }
-[ \t\f]            {  }
+[0-9]+             { parser.yylval = new ParserLeftVal(yytext()); return parser.NUMBER; }
+[ \t\f]*            {  }
 \+                { parser.yylval = new ParserLeftVal(yytext()); return parser.SUM; }
 \*                { parser.yylval = new ParserLeftVal(yytext()); return parser.MULT; }
 \-                { parser.yylval = new ParserLeftVal(yytext()); return parser.MIN; }
 \/                { parser.yylval = new ParserLeftVal(yytext()); return parser.DIV; }
-.                  { }
+.                  { parser.yylval = new ParserLeftVal(yytext()); return parser.ERROR; }
