@@ -10,8 +10,8 @@
 %left MULT DIV
 
 %%
-input : ERROR { yyerror($1); }
-  | E ERROR { yyerror($2); }
+input :  E ERROR { yyerror($2); }
+  | ERROR { yyerror($1); }
   | E     {$$ = $1; System.out.println("[OK] "+ $$  );}
 ;
 
