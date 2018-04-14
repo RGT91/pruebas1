@@ -15,13 +15,13 @@ input :  E ERROR { yyerror($2); }
   | E     {$$ = $1; System.out.println("[OK] "+ $$  );}
 ;
 
-E : E SUM T {$$ = $1 + $3;}
-  | E MIN T {$$ = $1 - $3;}
+E : E SUM T {$$ = $1 + $3; System.out.println("Pila: "+$$);}
+  | E MIN T {$$ = $1 - $3; System.out.println("Pila: "+$$);}
   | T
 ;
 
-T: T MULT INTEGER {$$ = $1 * $3;}
-  | T DIV INTEGER {$$ = $1 / $3;}
+T: T MULT INTEGER {$$ = $1 * $3; System.out.println("Pila: "+$$);}
+  | T DIV INTEGER {$$ = $1 / $3; System.out.println("Pila: "+$$);}
   | INTEGER {$$ = $1;}
 ;
 
