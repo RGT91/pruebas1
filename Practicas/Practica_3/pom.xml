@@ -72,7 +72,20 @@
                 <commandlineArgs>-Jclass=ParserLeft -Jpackage=asintactico ${project.basedir}/src/main/byaccj/ParserLeft.y</commandlineArgs>
             </configuration>
           </execution>
-        </executions>
+
+        <execution>
+          <id>analizador-sintactico-right</id>
+          <phase>initialize</phase>
+          <goals>
+            <goal>exec</goal>
+          </goals>
+          <configuration>
+              <workingDirectory>${project.basedir}/target/generated-sources/jflex/asintactico</workingDirectory>
+              <executable>byaccj</executable>
+              <commandlineArgs>-Jclass=ParserRight -Jpackage=asintactico ${project.basedir}/src/main/byaccj/ParserRight.y</commandlineArgs>
+          </configuration>
+        </execution>
+      </executions>
       </plugin>
 
       <plugin>
