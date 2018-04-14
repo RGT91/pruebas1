@@ -15,7 +15,7 @@ input :  E ERROR { yyerror($2); }
   | E     {$$ = $1; System.out.println("[OK] "+ $$  );}
 ;
 
-E : T SUM E {$$ = $1 + $3; System.out.println("Pila "+$$)}
+E : T SUM E {$$ = $1 + $3; System.out.println("Pila "+$$);}
   | T MIN E {$$ = $1 - $3;}
   | T
 ;
