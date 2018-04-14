@@ -3,6 +3,8 @@ install:
   - wget "http://jflex.de/release/jflex-1.6.1.tar.gz"
   - sudo tar -C /usr/share -xvzf jflex-1.6.1.tar.gz
   - sudo ln -s /usr/share/jflex-1.6.1/bin/jflex /usr/bin/jflex
+  - sudo apt-get install byacc-j
+  - yacc --help
 
 jobs:
   include:
@@ -24,4 +26,12 @@ jobs:
         - cd Proyectos/Proyecto_1
         - mvn compile
         - mvn exec:java -Dexec.mainClass="lexico.Test" -Dexec.args="resources/fizzbuzz.py"
+        - mvn install
+    - stage: practica3
+      script:
+        - cd Practicas
+        - cd Practica_3
+        - mvn initialize
+        - mvn compile
+        - mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test_fail_1.txt"
         - mvn install
