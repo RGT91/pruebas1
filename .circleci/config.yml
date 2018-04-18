@@ -62,6 +62,19 @@ jobs:
       - run:
           working_directory: Practicas/Practica_3
           command: mvn install
+  proyecto2:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          working_directory: Practicas/Practica_3
+          command: mvn initialize
+      - run:
+          working_directory: Practicas/Practica_3
+          command: mvn compile
+      - run:
+          working_directory: Practicas/Practica_3
+          command: mvn install
 
 workflows:
   version: 2
@@ -76,3 +89,7 @@ workflows:
           requires:
             - practica2
             - proyecto1
+      - proyecto2:
+          requires:
+            - proyecto1
+            - practica3

@@ -35,3 +35,9 @@ jobs:
         - mvn compile
         - mvn exec:java -Dexec.mainClass="asintactico.Parser" -Dexec.args="src/main/resources/test_fail_1.txt"
         - mvn install
+    - stage: proyecto2
+      script:
+        - cd Proyectos/Proyecto_2
+        - mvn initialize
+        - mvn compile
+        - mvn install
