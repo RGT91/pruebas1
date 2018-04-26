@@ -67,13 +67,13 @@ jobs:
     steps:
       - checkout
       - run:
-          working_directory: Practicas/Practica_3
+          working_directory: Proyectos/Proyecto_2
           command: mvn initialize
       - run:
-          working_directory: Practicas/Practica_3
+          working_directory: Proyectos/Proyecto_2
           command: mvn compile
       - run:
-          working_directory: Practicas/Practica_3
+          working_directory: Proyectos/Proyecto_2
           command: mvn install
 
 workflows:
