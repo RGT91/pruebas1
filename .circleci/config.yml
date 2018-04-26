@@ -3,7 +3,7 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 defaults: &defaults
-  working_directory: ~/project/legendary-barnacle
+  working_directory: ~/project/pruebas1
   docker:
     - image: sanjorgek/jflex:byaccj
 
