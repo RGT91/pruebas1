@@ -112,7 +112,6 @@ COMENTARIO 		=     	"#".*{SALTO}
   [ ]         { spaceCount++; }
   [\t\f]         { spaceCount+=4; }
   .         { yypushback(1);
-              yybegin(INITIAL);
               String dedents = "";
               if(pila.empty()){ //ponerle un cero a la pila si esta vacia
                 pila.push(new Integer(0));
@@ -142,7 +141,7 @@ COMENTARIO 		=     	"#".*{SALTO}
                       System.out.println("indenta");
                       System.out.println("----------------------------------");
                       return Parser.INDENTA;
-                  }
+                  }yybegin(INITIAL);
               }
 }
 .             { tokens += "Caracter ilegal <"+yytext()+">. En la linea "+ (yyline+1)+ ".\n"; return 0; }
