@@ -71,12 +71,20 @@ test: or_test                   { System.out.println("[OK]");}
 
 // or_test: and_test ('or' and_test)*
 or_test: and_test                   { System.out.println("[OK]");}
-  | and_test OR or_test                   { System.out.println("[OK]");}
+  | and_test or_rec                   { System.out.println("[OK]");}
   ;
-
+//or_rec: ('or' and_test)*
+or_rec: OR and_test               { System.out.println("[OK]");}
+  | OR and_test or_rec            { System.out.println("[OK]");}
+  ;
+  
 // and_test: not_test ('and' not_test)*
 and_test: not_test                   { System.out.println("[OK]");}
-  | not_test AND and_test                   { System.out.println("[OK]");}
+  | not_test and_rec                   { System.out.println("[OK]");}
+  ;
+  
+and_rec: AND not_test               { System.out.println("[OK]");}
+  | AND not_test and_rec            { System.out.println("[OK]");}
   ;
 
 // not_test: 'not' not_test | comparison
